@@ -1,0 +1,24 @@
+<launch>
+
+    <rosparam file="$(find path_planning)/config/path_planning_config.yaml" command="load"/>
+
+    <!-- pointcloud segmentation -->
+    <include file="$(find pointcloud_segmentation)/launch/all.launch" />
+
+    <!-- frontier evaluation -->
+    <node name="frontier_evaluation" pkg="path_planning" type="frontier_evaluation" output="screen">
+    </node>
+
+    <!-- optimal path -->
+    <node name="optimal_path_NBV" pkg="path_planning" type="optimal_path_NBV" output="screen">
+    </node>
+
+    <!-- visulization -->
+    <node name="visulization" pkg="path_planning" type="visulization" output="screen">
+    </node>
+
+    <!-- metrics -->
+    <node name="metrics" pkg="path_planning" type="metrics" output="screen">
+    </node>
+
+</launch>

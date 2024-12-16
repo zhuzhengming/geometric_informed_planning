@@ -1,0 +1,64 @@
+#########################################################################
+# frontier evaluation
+#########################################################################
+fov: 
+  h: 1.047197 # pi/3
+  v: 1.047197 # pi/3
+  # h: 1.570796 # pi/2
+  # v: 1.570796 # pi/2
+  dist: 1.5
+
+# The weight all factors when evaluating frontiers
+lambda_1: 6.0   # visibility gain
+lambda_2: 0.5   # density gain
+lambda_3: 1.0   # distance punishment
+lambda_4: 3.0   # vertical weight positive when model 1
+frontier_threshold: 0.0
+
+# Samping viewpoint 
+radius: 1.2
+sample_num: 10
+# collision threshold 
+collision_thre: 1.0
+
+# exploration is over
+exploration_rate: 0.998
+time_limitation: 600
+
+########################################################################
+# path planning 
+#########################################################################
+# local horizon model: 0 - sphere, 1 - horizontal band
+model: 1
+# local_horizon_scale : 3.0 # model 0
+local_horizon_scale : 1.0 # model 1
+interpolate_size: 0.8
+minGainThreshold: 0.0
+
+# arrival condition
+position_thre: 0.1
+angle_thre: 0.1
+
+
+##########################################################################
+# RRTStar parameters
+#########################################################################
+goal_radius: 1.0
+goal_sampling_prob: 0.2
+jump_size: 0.4
+disk_size: 1.0
+threshold_distance: 0.2
+limit_x_low: -12.0
+limit_x_high: 12.0
+limit_y_low: -12.0
+limit_y_high: 12.0
+limit_z_low:  0.0
+limit_z_high: 18.0
+timeout: 10.0 
+
+##########################################################################
+# metrics
+#########################################################################
+drag_h: 1.0
+drag_v: 2.0
+hover: 0
