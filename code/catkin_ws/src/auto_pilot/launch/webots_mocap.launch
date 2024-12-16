@@ -1,0 +1,11 @@
+<launch>
+    
+    <arg name="robotName" default="voxl_m500" />
+    <arg name="robotDef"  default="VOXL" />
+
+    <node pkg="auto_pilot_pkg" type="webots_mocap_node" name="$(anon webots_mocap_node)" output="screen">
+        <param name="robotName" value="$(arg robotName)" />
+        <param name="robotDef"  value="$(arg robotDef)"  />
+    </node>
+
+</launch>

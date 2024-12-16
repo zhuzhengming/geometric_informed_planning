@@ -1,0 +1,124 @@
+#VRML_SIM R2023a utf8
+
+
+EXTERNPROTO "../protos/starling.proto"
+EXTERNPROTO "../protos/voxl_m500.proto"
+EXTERNPROTO "../protos/crazyflie.proto"
+EXTERNPROTO "../protos/Quadrotor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Parquetry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/PaintedWood.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Fabric.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/dji/mavic/protos/Mavic2Pro.proto"
+WorldInfo {
+  basicTimeStep 8
+}
+Viewpoint {
+  orientation -0.16920082069898812 -0.04421683418350373 0.9845892310245818 3.6094325439138077
+  position 3.4596840939631606 2.7156234097153145 1.8005245784913781
+}
+Floor {
+  rotation 0 0 1 1.5707963267948966
+  size 6 6
+  appearance Parquetry {
+    type "light strip"
+  }
+}
+DEF CEILING Solid {
+  translation 0 0 4
+  rotation 0 -1 0 3.141592653589793
+  children [
+    Shape {
+      appearance PaintedWood {
+        colorOverride 0.560784 0.34902 0.00784314
+      }
+      geometry Plane {
+        size 6 6
+      }
+    }
+    PointLight {
+      attenuation 0 0 1
+      intensity 9
+      location -1.5 -1.5 0.3
+      castShadows TRUE
+    }
+    PointLight {
+      attenuation 0 0 1
+      intensity 9
+      location 1.5 1.5 0.3
+    }
+  ]
+}
+DEF WALL1 Solid {
+  translation 0 3 2
+  rotation 0 -0.70710578118615 0.707107781185531 3.14159
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance Fabric {
+        colorOverride 0.533333 0.541176 0.521569
+        textureTransform TextureTransform {
+          scale 5 1
+        }
+      }
+      geometry Plane {
+        size 6 4
+      }
+    }
+  ]
+  name "wall1"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL2 Solid {
+  translation 3 0 2
+  rotation -0.57735126918836 -0.5773482691869612 0.57735126918836 2.094395307179586
+  children [
+    USE WALL_SHAPE
+  ]
+  name "wall2"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 0 -3 2
+  rotation 1 0 0 -1.5707953071795862
+  children [
+    USE WALL_SHAPE
+  ]
+  name "wall3"
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation -3 0 2
+  rotation 0.577349935856137 -0.5773509358560258 0.577349935856137 -2.094395307179586
+  children [
+    USE WALL_SHAPE
+  ]
+  name "wall2(2)"
+  boundingObject USE WALL_SHAPE
+}
+Mavic2Pro {
+  translation -1.38821 0.563184 0.06
+  rotation 0 0 1 -0.261795307179586
+}
+Quadrotor {
+  translation -1.4 -0.43 0.106
+  rotation 1 0 0 1.5708
+  controller "default_controller"
+}
+voxl_m500 {
+  translation -0.518205 0.152442 0.02
+  rotation 0 0 1 0.523601
+}
+crazyflie {
+  translation -0.09 -0.11 0.02
+  name "crazyflie1"
+  controllerArgs [
+    "../../../config/crazyflie.fp"
+  ]
+}
+starling {
+  translation 0 0.68 0
+  rotation 0 0 1 -0.523595307179586
+  controllerArgs [
+    "../../../config/starling.fp"
+  ]
+}

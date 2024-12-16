@@ -1,0 +1,254 @@
+#VRML_SIM R2023a utf8
+
+
+EXTERNPROTO "../protos/starling.proto"
+EXTERNPROTO "../protos/voxl_m500.proto"
+EXTERNPROTO "../protos/crazyflie.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/Parquetry.proto"
+WorldInfo {
+  basicTimeStep 8
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        0 
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.3026177790251026 0.09176476844541985 -0.948684197765554 2.6014363284431483
+  position 3.40368986261002 1.6992280313391475 2.1821188681987085
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 5 5
+  floorAppearance Parquetry {
+    type "light strip"
+  }
+}
+Robot {
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry DEF BOX_SHAPE Box {
+        size 0.8 0.8 0.05
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0 0 0.3
+        minStop -3
+        maxStop 3
+      }
+      endPoint Solid {
+        translation 0 0 0.3
+        rotation 1 0 0 0
+        children [
+          Pose {
+            rotation 0 1 0 1.5707996938995747
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.45098 0.823529 0.0862745
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.5
+                  radius 0.005
+                }
+              }
+            ]
+          }
+          voxl_m500 {
+            translation 0 0 0
+            name "voxl_m5001"
+            controller "controller_tuner"
+            controllerArgs [
+              "../../../config/m500.fp"
+            ]
+            extensions [
+              Gyro {
+              }
+              GPS {
+              }
+            ]
+          }
+        ]
+        boundingObject DEF SHPERE_SHAPE Sphere {
+          radius 0.03
+        }
+        physics Physics {
+          density 100
+        }
+      }
+    }
+  ]
+  name "stand m500"
+  boundingObject USE BOX_SHAPE
+  controller "<none>"
+}
+voxl_m500 {
+  translation 1.15315 -0.14933 0.02
+  rotation 0 0 1 0.261799
+  name "voxl_m5002"
+  controller "controller_tuner_free_flight"
+  controllerArgs [
+    "../../../config/m500.fp"
+  ]
+  extensions [
+    Gyro {
+    }
+    GPS {
+    }
+  ]
+}
+Robot {
+  translation 0 1 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry DEF BOX_SHAPE Box {
+        size 0.8 0.8 0.05
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0 0 0.3
+        minStop -3
+        maxStop 3
+      }
+      endPoint Solid {
+        translation 0 0 0.3
+        rotation 1 0 0 0
+        children [
+          Pose {
+            rotation 0 1 0 1.5707996938995747
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.45098 0.823529 0.0862745
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.5
+                  radius 0.005
+                }
+              }
+            ]
+          }
+          crazyflie {
+            name "crazyflie1"
+            controller "controller_tuner"
+            controllerArgs [
+              "../../../config/crazyflie.fp"
+            ]
+          }
+        ]
+        boundingObject DEF SHPERE_SHAPE Sphere {
+          radius 0.03
+        }
+        physics Physics {
+          density 100
+        }
+      }
+    }
+  ]
+  name "stand crazyflie"
+  boundingObject USE BOX_SHAPE
+  controller "<none>"
+}
+crazyflie {
+  translation 1.19232 0.644308 0.04
+  rotation 0 0 1 -0.785395307179586
+  name "crazyflie2"
+  controller "controller_tuner_free_flight"
+  controllerArgs [
+    "../../../config/crazyflie.fp"
+  ]
+}
+Robot {
+  translation 0 -1.5 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+      }
+      geometry DEF BOX_SHAPE Box {
+        size 0.8 0.8 0.05
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0 0 0.3
+        minStop -3
+        maxStop 3
+      }
+      endPoint Solid {
+        translation 0 0 0.3
+        rotation 1 0 0 0
+        children [
+          Pose {
+            rotation 0 1 0 1.5707996938995747
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.45098 0.823529 0.0862745
+                  transparency 0.99
+                  roughness 1
+                  metalness 0
+                }
+                geometry Cylinder {
+                  height 0.5
+                  radius 0.005
+                }
+              }
+            ]
+          }
+          Pose {
+            translation 0 0 -0.02555
+            children [
+              starling {
+                name "starling1"
+                controller "controller_tuner"
+                controllerArgs [
+                  "../../../config/starling.fp"
+                ]
+              }
+            ]
+          }
+        ]
+        boundingObject DEF SHPERE_SHAPE Sphere {
+          radius 0.03
+        }
+        physics Physics {
+          density -1
+          mass 0.001
+        }
+      }
+    }
+  ]
+  name "stand starling"
+  boundingObject USE BOX_SHAPE
+  controller "<none>"
+}
+starling {
+  translation 1.09225 -1.25904 0.02
+  rotation 0 0 1 1.309
+  name "starling2"
+  controller "controller_tuner_free_flight"
+  controllerArgs [
+    "../../../config/starling.fp"
+  ]
+}
