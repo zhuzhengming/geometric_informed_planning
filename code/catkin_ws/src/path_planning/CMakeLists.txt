@@ -65,7 +65,7 @@ include_directories(
 add_executable(frontier_evaluation src/frontier_evaluation.cpp)
 add_executable(visulization src/visulization.cpp)
 add_executable(optimal_path_NBV src/optimal_path_NBV.cpp)
-add_executable(metrics src/metrics.cpp)
+add_executable(evaluation src/evaluation.cpp)
 
 
 target_link_libraries(frontier_evaluation PUBLIC
@@ -83,7 +83,7 @@ target_link_libraries(visulization PUBLIC
         Eigen3::Eigen    
 )
 
-target_link_libraries(metrics PUBLIC
+target_link_libraries(evaluation PUBLIC
         ${catkin_LIBRARIES}
         Eigen3::Eigen 
         Python3::Python

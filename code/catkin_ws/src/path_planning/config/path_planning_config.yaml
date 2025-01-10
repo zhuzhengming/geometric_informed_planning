@@ -1,5 +1,12 @@
 #########################################################################
-# frontier evaluation
+# General
+#########################################################################
+# exploration is over
+exploration_rate: 0.9975
+time_limitation: 800
+
+#########################################################################
+# Frontier evaluation
 #########################################################################
 fov: 
   h: 1.047197 # pi/3
@@ -12,7 +19,7 @@ fov:
 lambda_1: 6.0   # visibility gain
 lambda_2: 0.5   # density gain
 lambda_3: 1.0   # distance punishment
-lambda_4: 3.0   # vertical weight positive when model 1
+lambda_4: 0.0   # vertical weight positive when model 1
 frontier_threshold: 0.0
 
 # Samping viewpoint 
@@ -21,18 +28,15 @@ sample_num: 10
 # collision threshold 
 collision_thre: 1.0
 
-# exploration is over
-exploration_rate: 0.998
-time_limitation: 600
-
 ########################################################################
-# path planning 
+# Path planning 
 #########################################################################
 # local horizon model: 0 - sphere, 1 - horizontal band
-model: 1
-# local_horizon_scale : 3.0 # model 0
-local_horizon_scale : 1.0 # model 1
-interpolate_size: 0.8
+model: 0
+
+local_horizon_scale : 3.0 # model 0
+# local_horizon_scale : 1.0 # model 1
+interpolate_size: 0.5
 minGainThreshold: 0.0
 
 # arrival condition
@@ -45,7 +49,7 @@ angle_thre: 0.1
 #########################################################################
 goal_radius: 1.0
 goal_sampling_prob: 0.2
-jump_size: 0.4
+jump_size: 0.5
 disk_size: 1.0
 threshold_distance: 0.2
 limit_x_low: -12.0
@@ -57,8 +61,13 @@ limit_z_high: 18.0
 timeout: 10.0 
 
 ##########################################################################
-# metrics
+# Metrics
 #########################################################################
-drag_h: 1.0
-drag_v: 2.0
+drag_h: 0.069
+drag_v: 2.96
 hover: 0
+
+online_plot: 0
+save_file: 1
+
+output_path: /home/zhzhu/workspace/src/path_planning/output/comparison/vicinity_jp0.5_6.0

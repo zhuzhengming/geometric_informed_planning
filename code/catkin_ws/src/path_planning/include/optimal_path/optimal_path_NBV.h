@@ -15,6 +15,7 @@
 #include <sensor_msgs/PointCloud.h>
 #include <unordered_set>
 #include <nav_msgs/Path.h>
+#include <fstream>
 #include <mavros_msgs/PositionTarget.h>
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/Trajectory.h>
@@ -162,11 +163,14 @@ private:
     int model_;
 
     // planning duration 
-    double planning_duration_;
+    std::vector<double> planning_duration_set_;
     // total_duration 
     double total_duration_;
     double start_time_;
     double time_limitation_;
+
+    std::string output_path_;
+    int save_file_;
 
 };
 

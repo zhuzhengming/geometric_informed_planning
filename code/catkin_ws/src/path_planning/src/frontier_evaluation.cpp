@@ -10,7 +10,7 @@ Output: The viewpoint set with information gain
 
 
 // global variable
-double Vector3dEqual::tolerance = 1.15;
+double Vector3dEqual::tolerance = 1.1;
 std::unordered_set<Eigen::Vector3d, Vector3dHash, Vector3dEqual> EndPoints_set;
 
 FrontierEvaluator::FrontierEvaluator(ros::NodeHandle& nh){
@@ -64,6 +64,8 @@ void FrontierEvaluator::setParam(ros::NodeHandle& nh){
   nh.getParam("/fov/v", fake_fov_.v);
   nh.getParam("/fov/dist", fake_fov_.dist_range);
   nh.getParam("exploration_rate", exploration_rate_);
+  nh.getParam("output_path", output_path_);
+  nh.getParam("save_file", save_file_);
   
 
   ROS_INFO("Configuration:");
@@ -143,7 +145,7 @@ void FrontierEvaluator::endpointsCallback(const path_planning::Segment::ConstPtr
 /*-------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------------------------*/
 void FrontierEvaluator::processingThread(){
-  ros::Rate rate(50);
+  ros::Rate rate(20);
   double iteration_start_time, iteration_duration;
 
   while (ros::ok())
@@ -278,6 +280,22 @@ void FrontierEvaluator::processingThread(){
     if( cur_exploration_rate >= exploration_rate_) {
       terminate_signal_.data = true;
       terminate_pub_.publish(terminate_signal_);
+
+      if(save_file_==1){
+        std::string filepath = output_path_ + "/evaluation_duration.csv";
+        std::ofstream file(filepath);
+        if (!file.is_open()) {
+            std::cout << "Failed to open file: " << filepath << std::endl;
+            return;
+        }
+        for(const auto& duration : iteration_duration_set_){
+          file << std::fixed << std::setprecision(4);
+          file << duration << std::endl;
+        }
+        file.close();
+        save_file_ = 0;
+      }
+      continue;
     }
 
     // publish when all the frontiers in the local horizon have been evaluated 
@@ -285,10 +303,7 @@ void FrontierEvaluator::processingThread(){
 
     // record iteration duration
     iteration_duration = (ros::Time::now().toNSec() - iteration_start_time) / 1000000;
-    if(iteration_duration > max_eval_duration_){
-      max_eval_duration_ = iteration_duration;
-      ROS_INFO("max evaluation time-cost: %f ms", max_eval_duration_);
-    }
+    iteration_duration_set_.push_back(iteration_duration);
       
     rate.sleep();
   }

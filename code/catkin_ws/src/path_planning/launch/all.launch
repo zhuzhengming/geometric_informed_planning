@@ -18,7 +18,7 @@
     </node>
 
     <!-- metrics -->
-    <node name="metrics" pkg="path_planning" type="metrics" output="screen">
+    <node name="evaluation" pkg="path_planning" type="evaluation" output="screen">
     </node>
 
 </launch>

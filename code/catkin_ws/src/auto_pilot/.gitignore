@@ -1,0 +1,21 @@
+# build files
+*
+!/**/
+!*.*
+build/
+*.so
+
+# do not ignore makefiles
+!makefile 
+!Makefile 
+
+# editor
+.vscode
+
+# webots
+.*.cache
+.*.wbproj
+.*.jpg
+
+# python
+__pycache__/

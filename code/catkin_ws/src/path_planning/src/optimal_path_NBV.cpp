@@ -72,12 +72,26 @@ void Path_planner::shutdownCallback(const std_msgs::Bool::ConstPtr& msg){
     bool sent = false;
 
     if(msg->data){
-        if(segments_.size() > 50 || exploration_over_) 
+        if(segments_.size() > 20 || exploration_over_) 
         {   
             backOrigin();
             if(!sent)
             {
                 ROS_INFO("Exploration is over!!");
+                if(save_file_ == 1){
+                    std::string filepath = output_path_ + "/planning_duration.csv";
+                    std::ofstream file(filepath);
+                    if (!file.is_open()) {
+                        std::cout << "Failed to open file: " << filepath << std::endl;
+                        return;
+                    }
+                    for(const auto& duration : planning_duration_set_){
+                        file << std::fixed << std::setprecision(4);
+                        file << duration << std::endl;
+                    }
+                    file.close();
+                    save_file_ = 0;
+                }
                 sent = true;
             }
             exploration_over_ = true;
@@ -101,6 +115,8 @@ void Path_planner::setParam(ros::NodeHandle& nh){
   nh.getParam("/interpolate_size", interpolate_size_);
   nh.getParam("/model", model_);
   nh.getParam("/time_limitation", time_limitation_);
+  nh.getParam("output_path", output_path_);
+  nh.getParam("save_file", save_file_);
 
   ROS_INFO("Configuration:");
   ROS_INFO("  minGainThreshold: %f", minGainThreshold_);
@@ -228,7 +244,7 @@ void Path_planner::ViewpointOutCallback(const path_planning::Viewpoint::ConstPtr
 }
 
 void Path_planner::PathPlanningThread(){
-    ros::Rate rate(50);
+    ros::Rate rate(10);
     bool ready = false;
     double iteration_start_time, iteration_duration;
 
@@ -290,10 +306,7 @@ void Path_planner::PathPlanningThread(){
             if(status != RRTStar::SUCCESS) ready = false;
 
             iteration_duration = (ros::Time::now().toNSec() - iteration_start_time) / 1000000;
-            if(iteration_duration > planning_duration_){
-            planning_duration_ = iteration_duration;
-            ROS_INFO("max planning time-cost: %f ms", planning_duration_);
-            }
+            planning_duration_set_.push_back(iteration_duration);
 
         rate.sleep();
     }

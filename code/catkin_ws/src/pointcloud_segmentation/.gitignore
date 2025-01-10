@@ -1,0 +1,29 @@
+# Files without extensions
+*
+!/**/
+!*.*
+!Makefile
+!makefile
+
+# CMake
+CMakeCache.txt
+cmake_install.cmake
+
+# ROS 
+build/
+devel/
+install/
+
+# code editor
+.vscode/
+
+# webots
+.*.cache
+.*.wbproj
+.*.jpg
+
+# python
+__pycache__/
+
+# Other
+output_data/

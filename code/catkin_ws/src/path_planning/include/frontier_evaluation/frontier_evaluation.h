@@ -13,6 +13,7 @@
 #include <thread>
 #include <shared_mutex>
 #include <tf/tf.h>
+#include <fstream>
 #include <functional>
 #include <std_msgs/Bool.h>
 #include <geometry_msgs/PoseStamped.h>
@@ -147,6 +148,11 @@ private:
 
     // evaluation duration 
     double max_eval_duration_;
+
+    std::vector<double> iteration_duration_set_;
+
+    std::string output_path_;
+    int save_file_;
 
 };
 
